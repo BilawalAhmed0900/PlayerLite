@@ -5,6 +5,7 @@ A small audio player for geeks
     Dot Net Framework 2.0
 
 # Compilation
+    git clone https://github.com/Dragneel1234/PlayerLite.git
 * Open  `PlayerLite.sln` in Visual Studio
 * Build `Release`, simple as that
 
