@@ -164,7 +164,7 @@ namespace PlayerLite
             wplayer.controls.stop();
             timer_1.Enabled = false;
 
-            WMPLib.IWMPMedia3 media = (WMPLib.IWMPMedia3)wplayer.mediaCollection.getAll().get_Item(0);
+            WMPLib.IWMPMedia3 media = (WMPLib.IWMPMedia3)wplayer.mediaCollection.getByName("pLIST").Item[0];
             wplayer.mediaCollection.remove(media, true);
         }
 
