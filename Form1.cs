@@ -164,12 +164,8 @@ namespace PlayerLite
             wplayer.controls.stop();
             timer_1.Enabled = false;
 
-            WMPLib.IWMPPlaylistArray plCollection = wplayer.playlistCollection.getByName("pLIST");
-            if (plCollection.count > 0)
-            {
-                WMPLib.IWMPPlaylist pl = plCollection.Item(0);
-                wplayer.playlistCollection.remove(pl);
-            }
+            WMPLib.IWMPMedia3 media = (WMPLib.IWMPMedia3)wplayer.mediaCollection.getAll().get_Item(0);
+            wplayer.mediaCollection.remove(media, true);
         }
 
         // Invert state of playing
