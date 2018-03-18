@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace PlayerLite
@@ -15,6 +14,12 @@ namespace PlayerLite
         // Media
         WMPLib.IWMPMedia media;
 
+        // Timer for keeping progress
+        Timer timer_1;
+
+        // How much each scroll account for in term of volume increment or decrement
+        const int Delta = 5;
+
         // Strings for play/pause button
         string play = "▶";
         string pause = "⏸";
@@ -22,6 +27,24 @@ namespace PlayerLite
         public Form1()
         {
             InitializeComponent();
+            MouseWheel += Form_MouseWheel;
+        }
+
+        void Form_MouseWheel(object sender, MouseEventArgs e)
+        {
+            /* 
+             Each 'click'(120 in number) in Wheel will increase or decrease
+             volume by 5
+            */
+            int byHowMuch = (e.Delta / 120) * Delta;
+
+            // If the change is in range
+            if (volume_bar.Value + byHowMuch <= volume_bar.Maximum
+                && volume_bar.Value + byHowMuch >= volume_bar.Minimum)
+            {
+                volume_bar.Value += byHowMuch;
+                wplayer.settings.volume += byHowMuch;
+            }           
         }
 
         // If an item is dragged into list box
@@ -56,7 +79,6 @@ namespace PlayerLite
                     wplayer.controls.play();
                     play_pause.Text = pause;
                 }
-
             }              
         }
         
@@ -72,6 +94,10 @@ namespace PlayerLite
                     playlist.removeItem(playlist.Item[songBox.SelectedIndex]);
                     songBox.Items.RemoveAt(songBox.SelectedIndex);
                 }            
+            }
+            else if (e.KeyCode == Keys.Space)
+            {
+                play_pause_inversion();
             }
         }
 
@@ -107,16 +133,36 @@ namespace PlayerLite
                 wplayer.controls.play();
                 play_pause.Text = pause;
             }
+
+            // Timer for setting value in progress_bar
+            timer_1 = new Timer();
+            timer_1.Tick += new EventHandler(update_progress);
+            timer_1.Interval = 100;
+            timer_1.Enabled = true;
+        }
+
+        private void update_progress(object source, EventArgs e)
+        {
+            if ((int)wplayer.playState == 3)
+            {
+                if (progress_bar.Maximum != (int)wplayer.currentMedia.duration)
+                {
+                    progress_bar.Maximum = (int)wplayer.currentMedia.duration;
+                }
+
+                progress_bar.Value = (int)wplayer.controls.currentPosition;
+            }
         }
 
         // When the program exits
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             wplayer.controls.stop();
+            timer_1.Enabled = false;
         }
 
-        // Play/pause button clicked
-        private void play_pause_Click(object sender, EventArgs e)
+        // Invert state of playing
+        private void play_pause_inversion()
         {
             if (play_pause.Text == pause)
             {
@@ -128,6 +174,12 @@ namespace PlayerLite
                 wplayer.controls.play();
                 play_pause.Text = pause;
             }
+        }
+
+        // Play/pause button clicked
+        private void play_pause_Click(object sender, EventArgs e)
+        {
+            play_pause_inversion();
         }
 
         // Volume controller
@@ -147,6 +199,32 @@ namespace PlayerLite
 
                 play_pause.Text = pause;
             }
+        }
+
+        // A button is pressed
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Space pressed
+            if (e.KeyCode == Keys.Space)
+            {
+                play_pause_inversion();
+            }
+        }
+
+        // When progress_bar is scrolled
+        private void progress_bar_Scroll(object sender, EventArgs e)
+        {
+            wplayer.controls.currentPosition = progress_bar.Value;
+        }
+
+        // When progress_bar is clicked, slightly missing on the edges
+        private void progress_bar_MouseDown(object sender, MouseEventArgs e)
+        {
+            double actual_value = ((double)e.X / progress_bar.Width) *
+                (progress_bar.Maximum - progress_bar.Minimum);
+
+            progress_bar.Value = (int)actual_value;
+            wplayer.controls.currentPosition = progress_bar.Value;
         }
     }
 }

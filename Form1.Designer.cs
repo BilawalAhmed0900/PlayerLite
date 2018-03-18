@@ -32,7 +32,9 @@
             this.songBox = new System.Windows.Forms.ListBox();
             this.play_pause = new System.Windows.Forms.Button();
             this.volume_bar = new System.Windows.Forms.TrackBar();
+            this.progress_bar = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.volume_bar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progress_bar)).BeginInit();
             this.SuspendLayout();
             // 
             // songBox
@@ -68,11 +70,23 @@
             this.volume_bar.TabIndex = 2;
             this.volume_bar.Scroll += new System.EventHandler(this.volume_bar_Scroll);
             // 
+            // progress_bar
+            // 
+            this.progress_bar.Location = new System.Drawing.Point(50, 152);
+            this.progress_bar.Name = "progress_bar";
+            this.progress_bar.Size = new System.Drawing.Size(344, 45);
+            this.progress_bar.TabIndex = 3;
+            this.progress_bar.TickFrequency = 0;
+            this.progress_bar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.progress_bar.Scroll += new System.EventHandler(this.progress_bar_Scroll);
+            this.progress_bar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.progress_bar_MouseDown);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(516, 192);
+            this.Controls.Add(this.progress_bar);
             this.Controls.Add(this.volume_bar);
             this.Controls.Add(this.play_pause);
             this.Controls.Add(this.songBox);
@@ -83,7 +97,9 @@
             this.Text = "PlayerLite";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.volume_bar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progress_bar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -94,6 +110,7 @@
         private System.Windows.Forms.ListBox songBox;
         private System.Windows.Forms.Button play_pause;
         private System.Windows.Forms.TrackBar volume_bar;
+        private System.Windows.Forms.TrackBar progress_bar;
     }
 }
 
