@@ -76,6 +76,8 @@ namespace PlayerLite
                 Add_To_Playlist(file);
                 if (previous == 0)
                 {
+                    progress_bar.Value = 0;
+                    wplayer.controls.currentPosition = 0;
                     wplayer.controls.play();
                     play_pause.Text = pause;
                 }
@@ -130,6 +132,8 @@ namespace PlayerLite
                     Add_To_Playlist(file);
                 }
 
+                progress_bar.Value = 0;
+                wplayer.controls.currentPosition = 0;
                 wplayer.controls.play();
                 play_pause.Text = pause;
             }
@@ -145,12 +149,12 @@ namespace PlayerLite
         {
             if ((int)wplayer.playState == 3)
             {
-                if (progress_bar.Maximum != (int)wplayer.currentMedia.duration)
+                if (progress_bar.Maximum != Convert.ToInt32(wplayer.currentMedia.duration))
                 {
-                    progress_bar.Maximum = (int)wplayer.currentMedia.duration;
+                    progress_bar.Maximum = Convert.ToInt32(wplayer.currentMedia.duration);
                 }
 
-                progress_bar.Value = (int)wplayer.controls.currentPosition;
+                progress_bar.Value = Convert.ToInt32(wplayer.controls.currentPosition);
             }
         }
 
@@ -223,7 +227,7 @@ namespace PlayerLite
             double actual_value = ((double)e.X / progress_bar.Width) *
                 (progress_bar.Maximum - progress_bar.Minimum);
 
-            progress_bar.Value = (int)actual_value;
+            progress_bar.Value = Convert.ToInt32(actual_value);
             wplayer.controls.currentPosition = progress_bar.Value;
         }
     }
