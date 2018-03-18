@@ -11,4 +11,4 @@ A small audio player for geeks
 # Release
    #### [Here][1] ####
 
-[1]: https://github.com/Dragneel1234/PlayerLite/releases "Releases"
+[1]: https://github.com/Dragneel1234/PlayerLite/releases/latest "Latest Releases"
