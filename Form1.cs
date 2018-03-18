@@ -141,7 +141,7 @@ namespace PlayerLite
             // Timer for setting value in progress_bar
             timer_1 = new Timer();
             timer_1.Tick += new EventHandler(update_progress);
-            timer_1.Interval = 5;
+            timer_1.Interval = 100;
             timer_1.Enabled = true;
         }
 
