@@ -6,7 +6,7 @@ A small audio player for geeks
 
 # Compilation
 * Open  `PlayerLite.sln` in Visual Studio
-* Compile, simple as that
+* Build `Release`, simple as that
 
 # Release
    #### [Here][1] ####
