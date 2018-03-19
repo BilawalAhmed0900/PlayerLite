@@ -164,7 +164,8 @@ namespace PlayerLite
             wplayer.controls.stop();
             timer_1.Enabled = false;
 
-            WMPLib.IWMPMedia3 media = (WMPLib.IWMPMedia3)wplayer.mediaCollection.getByName("pLIST").Item[0];
+            WMPLib.IWMPMedia3 media = 
+                (WMPLib.IWMPMedia3)wplayer.mediaCollection.getByName("pLIST").Item[0];
             wplayer.mediaCollection.remove(media, true);
         }
 
@@ -232,6 +233,87 @@ namespace PlayerLite
 
             progress_bar.Value = Convert.ToInt32(actual_value);
             wplayer.controls.currentPosition = progress_bar.Value;
+        }
+
+        // Notification Icon double clicked
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // If window state is normal, hide it; else, show it
+            if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Minimized;
+                ShowInTaskbar = false;
+                Hide();
+            }
+            else if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+                ShowInTaskbar = true;
+                Show();
+            }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            // If minimize button clicked
+            if (FormWindowState.Minimized == WindowState)
+            {
+                ShowInTaskbar = false;
+                Hide();
+            }
+        }
+
+        private void playToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((int)wplayer.playState == 1 || (int)wplayer.playState == 2)
+            {
+                wplayer.controls.play();
+                play_pause.Text = pause;
+            }
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((int)wplayer.playState == 3)
+            {
+                wplayer.controls.pause();
+                play_pause.Text = play;
+            }
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((int)wplayer.playState == 3)
+            {
+                wplayer.controls.stop();
+                play_pause.Text = play;
+                progress_bar.Value = 0;
+            }
+        }
+
+        private void nextSongToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            wplayer.controls.next();
+        }
+
+        private void previousSongToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            wplayer.controls.previous();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void stop_button_Click(object sender, EventArgs e)
+        {
+            if ((int)wplayer.playState == 3)
+            {
+                wplayer.controls.stop();
+                play_pause.Text = play;
+                progress_bar.Value = 0;
+            }
         }
     }
 }
