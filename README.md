@@ -23,5 +23,5 @@ A small audio player for geeks
 You tell
 
 # Future thoughts
-* Addition of file when opened from Explorer
+* Addition of audio file to playlist when opened from Explorer
 * Maybe a new design overall
