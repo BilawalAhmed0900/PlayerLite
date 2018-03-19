@@ -270,7 +270,7 @@ namespace PlayerLite
         private void Form1_Resize(object sender, EventArgs e)
         {
             // If minimize button clicked
-            if (FormWindowState.Minimized == WindowState)
+            if (WindowState == FormWindowState.Minimized)
             {
                 ShowInTaskbar = false;
                 Hide();
@@ -336,6 +336,14 @@ namespace PlayerLite
             MessageBox.Show("PlayeLite " + _Version + "\n" + 
                 "Made by Dragneel1234" + "\n" +
                 "https://github.com/Dragneel1234");
+        }
+
+        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                Activate();
+            }
         }
     }
 }
