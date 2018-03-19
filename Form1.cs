@@ -20,6 +20,8 @@ namespace PlayerLite
         // How much each scroll account for in term of volume increment or decrement
         const int Delta = 5;
 
+        const string _Version = "v0.0.5";
+
         // Strings for play/pause button
         string play = "▶";
         string pause = "⏸";
@@ -327,6 +329,13 @@ namespace PlayerLite
                 play_pause.Text = play;
                 progress_bar.Value = 0;
             }
+        }
+
+        private void about_button_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("PlayeLite " + _Version + "\n" + 
+                "Made by Dragneel1234" + "\n" +
+                "https://github.com/Dragneel1234");
         }
     }
 }

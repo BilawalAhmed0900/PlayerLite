@@ -43,6 +43,7 @@
             this.previousSongToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stop_button = new System.Windows.Forms.Button();
+            this.about_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.volume_bar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.progress_bar)).BeginInit();
             this.contextMenu.SuspendLayout();
@@ -52,7 +53,7 @@
             // 
             this.songBox.AllowDrop = true;
             this.songBox.FormattingEnabled = true;
-            this.songBox.Location = new System.Drawing.Point(12, 12);
+            this.songBox.Location = new System.Drawing.Point(12, 30);
             this.songBox.Name = "songBox";
             this.songBox.Size = new System.Drawing.Size(492, 134);
             this.songBox.TabIndex = 0;
@@ -64,7 +65,7 @@
             // play_pause
             // 
             this.play_pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.play_pause.Location = new System.Drawing.Point(12, 152);
+            this.play_pause.Location = new System.Drawing.Point(12, 170);
             this.play_pause.Name = "play_pause";
             this.play_pause.Size = new System.Drawing.Size(32, 28);
             this.play_pause.TabIndex = 1;
@@ -74,7 +75,7 @@
             // 
             // volume_bar
             // 
-            this.volume_bar.Location = new System.Drawing.Point(400, 152);
+            this.volume_bar.Location = new System.Drawing.Point(400, 170);
             this.volume_bar.Maximum = 100;
             this.volume_bar.Name = "volume_bar";
             this.volume_bar.Size = new System.Drawing.Size(104, 45);
@@ -83,7 +84,7 @@
             // 
             // progress_bar
             // 
-            this.progress_bar.Location = new System.Drawing.Point(91, 152);
+            this.progress_bar.Location = new System.Drawing.Point(91, 170);
             this.progress_bar.Name = "progress_bar";
             this.progress_bar.Size = new System.Drawing.Size(303, 45);
             this.progress_bar.TabIndex = 3;
@@ -158,7 +159,7 @@
             // 
             // stop_button
             // 
-            this.stop_button.Location = new System.Drawing.Point(50, 152);
+            this.stop_button.Location = new System.Drawing.Point(50, 170);
             this.stop_button.Name = "stop_button";
             this.stop_button.Size = new System.Drawing.Size(32, 28);
             this.stop_button.TabIndex = 5;
@@ -166,11 +167,24 @@
             this.stop_button.UseVisualStyleBackColor = true;
             this.stop_button.Click += new System.EventHandler(this.stop_button_Click);
             // 
+            // about_button
+            // 
+            this.about_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.about_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.about_button.Location = new System.Drawing.Point(483, 5);
+            this.about_button.Name = "about_button";
+            this.about_button.Size = new System.Drawing.Size(21, 19);
+            this.about_button.TabIndex = 6;
+            this.about_button.Text = "?";
+            this.about_button.UseVisualStyleBackColor = true;
+            this.about_button.Click += new System.EventHandler(this.about_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(516, 192);
+            this.ClientSize = new System.Drawing.Size(516, 210);
+            this.Controls.Add(this.about_button);
             this.Controls.Add(this.stop_button);
             this.Controls.Add(this.progress_bar);
             this.Controls.Add(this.volume_bar);
@@ -208,6 +222,7 @@
         private System.Windows.Forms.ToolStripMenuItem previousSongToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button stop_button;
+        private System.Windows.Forms.Button about_button;
     }
 }
 
