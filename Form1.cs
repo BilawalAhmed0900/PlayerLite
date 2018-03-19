@@ -158,15 +158,27 @@ namespace PlayerLite
             }
         }
 
-        // When the program exits
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void stop_everything()
         {
             wplayer.controls.stop();
             timer_1.Enabled = false;
 
-            WMPLib.IWMPMedia3 media = 
-                (WMPLib.IWMPMedia3)wplayer.mediaCollection.getByName("pLIST").Item[0];
-            wplayer.mediaCollection.remove(media, true);
+            int total_count = wplayer.mediaCollection.getByName("pLIST").count;
+            if (total_count > 0)
+            {
+                for (int i = 0; i < total_count; i++)
+                {
+                    WMPLib.IWMPMedia3 media =
+                        (WMPLib.IWMPMedia3)wplayer.mediaCollection.getByName("pLIST").Item[i];
+                    wplayer.mediaCollection.remove(media, true);
+                }
+            }       
+        }
+
+        // When the program exits
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            stop_everything();
         }
 
         // Invert state of playing
@@ -303,6 +315,7 @@ namespace PlayerLite
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            stop_everything();
             Application.Exit();
         }
 
