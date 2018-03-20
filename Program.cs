@@ -15,7 +15,7 @@ namespace PlayerLite
         {
             bool createdNew;
             Mutex mutex = new System.Threading.Mutex(true, 
-                @"Global\" + "{9408310947-9450348902375-9735}", out createdNew);
+                @"Global\" + "{BA6C37A1-A58F-4B12-AADB-BFC49DB812EC}", out createdNew);
             if (!createdNew)
             {
                 return;

@@ -17,6 +17,13 @@ namespace PlayerLite
         // Timer for keeping progress
         Timer timer_1;
 
+
+        // For time indication on progress_bar
+        Timer timer_2;
+
+        // To store time in
+        string time = "";
+
         // How much each scroll account for in term of volume increment or decrement
         const int Delta = 5;
 
@@ -143,8 +150,13 @@ namespace PlayerLite
             // Timer for setting value in progress_bar
             timer_1 = new Timer();
             timer_1.Tick += new EventHandler(update_progress);
-            timer_1.Interval = 100;
+            timer_1.Interval = 5;
             timer_1.Enabled = true;
+
+            timer_2 = new Timer();
+            timer_1.Tick += new EventHandler(keep_time_track);
+            timer_2.Interval = 10;
+            timer_2.Enabled = true;
         }
 
         private void update_progress(object source, EventArgs e)
@@ -160,10 +172,37 @@ namespace PlayerLite
             }
         }
 
+        private string timeint_to_str(int time)
+        {
+            int hours = time / 3600;
+            int minutes = (time % 3600) / 60;
+            int second = time % 60;
+
+            return 
+                hours.ToString().PadLeft(2, '0') + ":" +
+                minutes.ToString().PadLeft(2, '0') + ":" +
+                second.ToString().PadLeft(2, '0');
+        }
+
+        private void keep_time_track(object source, EventArgs e)
+        {
+            int relative_x = MousePosition.X - Left - progress_bar.Left - 10;
+            if ((int)wplayer.playState == 3 && relative_x > 0)
+            {
+                time = 
+                    timeint_to_str(Convert.ToInt32(wplayer.currentMedia.duration) 
+                    * relative_x / progress_bar.Maximum) +
+                    "/" +
+                    timeint_to_str(Convert.ToInt32(wplayer.currentMedia.duration));
+                progress_tip.SetToolTip(progress_bar, time);
+            }
+        }
+
         private void stop_everything()
         {
             wplayer.controls.stop();
             timer_1.Enabled = false;
+            timer_2.Enabled = false;
 
             int total_count = wplayer.mediaCollection.getByName("pLIST").count;
             if (total_count > 0)
@@ -264,6 +303,7 @@ namespace PlayerLite
                 WindowState = FormWindowState.Normal;
                 ShowInTaskbar = true;
                 Show();
+                Activate();
             }
         }
 
@@ -344,6 +384,16 @@ namespace PlayerLite
             {
                 Activate();
             }
+        }
+
+        private void progress_bar_MouseEnter(object sender, EventArgs e)
+        {
+            progress_tip.ShowAlways = true;
+        }
+
+        private void progress_bar_MouseLeave(object sender, EventArgs e)
+        {
+            progress_tip.ShowAlways = false;
         }
     }
 }

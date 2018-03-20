@@ -44,6 +44,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stop_button = new System.Windows.Forms.Button();
             this.about_button = new System.Windows.Forms.Button();
+            this.progress_tip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.volume_bar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.progress_bar)).BeginInit();
             this.contextMenu.SuspendLayout();
@@ -92,6 +93,8 @@
             this.progress_bar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.progress_bar.Scroll += new System.EventHandler(this.progress_bar_Scroll);
             this.progress_bar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.progress_bar_MouseDown);
+            this.progress_bar.MouseEnter += new System.EventHandler(this.progress_bar_MouseEnter);
+            this.progress_bar.MouseLeave += new System.EventHandler(this.progress_bar_MouseLeave);
             // 
             // notifyIcon
             // 
@@ -224,6 +227,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button stop_button;
         private System.Windows.Forms.Button about_button;
+        private System.Windows.Forms.ToolTip progress_tip;
     }
 }
 
