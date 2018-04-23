@@ -20,7 +20,8 @@ A small audio player for geeks
 * [Here](https://github.com/Dragneel1234/PlayerLite/releases/latest)
 
 # Bugs
-You tell
+Currently a bug, which don't allow any file to be player
+Will fix that later
 
 # Future thoughts
 * Addition of audio file to playlist when opened from Explorer
