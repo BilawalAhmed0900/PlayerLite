@@ -20,7 +20,7 @@ A small audio player for geeks
 * [Here](https://github.com/Dragneel1234/PlayerLite/releases/latest)
 
 # Bugs
-You tell
+Sometimes PlayerLite will not show after going to tray
 
 # Future thoughts
 * Addition of audio file to playlist when opened from Explorer
