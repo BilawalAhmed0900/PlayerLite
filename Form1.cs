@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Windows.Forms;
+using WMPLib;
 
 namespace PlayerLite
 {
     public partial class Form1 : Form
     {
         // The actual player
-        WMPLib.WindowsMediaPlayer wplayer;
+        WindowsMediaPlayer wplayer;
 
         // The playlist, to add media in
-        WMPLib.IWMPPlaylist playlist;
+        IWMPPlaylist playlist;
 
         // Media
-        WMPLib.IWMPMedia media;
+        IWMPMedia media;
 
         // Timer for keeping progress
         Timer timer_1;
@@ -27,7 +28,7 @@ namespace PlayerLite
         // How much each scroll account for in term of volume increment or decrement
         const int Delta = 5;
 
-        const string _Version = "v0.0.5";
+        const string _Version = "v0.0.6";
 
         // Strings for play/pause button
         string play = "▶";
@@ -118,9 +119,9 @@ namespace PlayerLite
         private void Form1_Load(object sender, EventArgs e)
         {
             // Make the player invisible, add a playlist to it
-            wplayer = new WMPLib.WindowsMediaPlayer();
+            wplayer = new WindowsMediaPlayer();
             wplayer.uiMode = "invisible";
-            playlist = wplayer.playlistCollection.newPlaylist("pLIST");
+            playlist = wplayer.playlistCollection.newPlaylist("gu2ba6ed4f32s1t");
             wplayer.currentPlaylist = playlist;
 
             // Default volume
@@ -186,14 +187,20 @@ namespace PlayerLite
 
         private void keep_time_track(object source, EventArgs e)
         {
-            int relative_x = MousePosition.X - Left - progress_bar.Left - 10;
-            if ((int)wplayer.playState == 3 && relative_x > 0)
+            int relative_x;
+            if ((int)wplayer.playState == 3 && 
+                (relative_x = MousePosition.X - Left - progress_bar.Left) > 0)
             {
                 time = 
                     timeint_to_str(Convert.ToInt32(wplayer.currentMedia.duration) 
-                    * relative_x / progress_bar.Maximum) +
+                    * relative_x / (progress_bar.Maximum - 10)) +
                     "/" +
                     timeint_to_str(Convert.ToInt32(wplayer.currentMedia.duration));
+                progress_tip.SetToolTip(progress_bar, time);
+            }
+            else if ((int)wplayer.playState != 3 && time != "")
+            {
+                time = "";
                 progress_tip.SetToolTip(progress_bar, time);
             }
         }
@@ -203,17 +210,8 @@ namespace PlayerLite
             wplayer.controls.stop();
             timer_1.Enabled = false;
             timer_2.Enabled = false;
-
-            int total_count = wplayer.mediaCollection.getByName("pLIST").count;
-            if (total_count > 0)
-            {
-                for (int i = 0; i < total_count; i++)
-                {
-                    WMPLib.IWMPMedia3 media =
-                        (WMPLib.IWMPMedia3)wplayer.mediaCollection.getByName("pLIST").Item[i];
-                    wplayer.mediaCollection.remove(media, true);
-                }
-            }       
+            wplayer.currentPlaylist.clear();
+            wplayer.playlistCollection.remove(wplayer.currentPlaylist);       
         }
 
         // When the program exits
@@ -281,10 +279,16 @@ namespace PlayerLite
         // When progress_bar is clicked, slightly missing on the edges
         private void progress_bar_MouseDown(object sender, MouseEventArgs e)
         {
-            double actual_value = ((double)e.X / progress_bar.Width) *
+            double actual_value = (((double)e.X) / (progress_bar.Width)) *
                 (progress_bar.Maximum - progress_bar.Minimum);
 
-            progress_bar.Value = Convert.ToInt32(actual_value);
+            if (actual_value < 0)
+                actual_value = 0;
+
+            if (actual_value > progress_bar.Maximum)
+                actual_value = progress_bar.Maximum;
+
+            progress_bar.Value = (int)actual_value;
             wplayer.controls.currentPosition = progress_bar.Value;
         }
 
